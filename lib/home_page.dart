@@ -1,4 +1,7 @@
 import 'package:aula01/pages/hello_page1.dart';
+import 'package:aula01/pages/hello_page2.dart';
+import 'package:aula01/pages/hello_page3.dart';
+import 'package:aula01/widgets/blue_button.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -51,45 +54,42 @@ class HomePage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                _button(context, "ListView"),
-                _button(context, "Page 2"),
-                _button(context, "Page 3"),
+                BlueButton("ListView", () => _onClickNavigator(context, HelloPage1())),
+                BlueButton( "Page 2", () => _onClickNavigator(context, HelloPage2())),
+                BlueButton( "Page 3", () => _onClickNavigator(context, HelloPage3())),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                _button(context, "Snack"),
-                _button(context, "Dialog"),
-                _button(context, "Toast"),
+                BlueButton( "Snack", _onClickSnack),
+                BlueButton( "Dialog", _onClickDialog),
+                BlueButton( "Toast", _onClickToast),
               ],
             ),
           ],
         );
   }
 
-  _button(context, String text) {
-    // ignore: deprecated_member_use
-    return RaisedButton(
-      color: Colors.blue,
-      child: Text(
-          text,
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 20
-        ),
-      ),
-        onPressed: () {
-        _onClickOk(context);
-        }
-    );
+  void _onClickNavigator(BuildContext context, Widget page) async {
+    String s =  await Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+      return page;
+    }));
+
+    print(">>$s");
   }
 
-  void _onClickOk(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
-      return HelloPage1();
-    }));
+
+
+  _onClickSnack() {
   }
+
+  _onClickDialog() {
+  }
+
+  _onClickToast() {
+  }
+}
 
   _img(String img) {
     return Image.asset(
@@ -112,4 +112,5 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-}
+
+
